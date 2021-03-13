@@ -1,7 +1,7 @@
 from flask import Flask
 import logging as logger
-logger.basicConfig(level="DEBUG")
 
+logger.basicConfig(level="DEBUG")
 flask_app_instance = Flask(__name__)
 
 if __name__ == '__main__':
