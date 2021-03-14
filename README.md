@@ -2,8 +2,8 @@
 
 ## TODO
 
-- [ ] create the service layer
-- [ ] communicate the API with the postgres through psycopg
+- [x] communicate the API with the postgres through psycopg
+- [ ] create post to create the user in database
 
 ## OPTIONAL TODO
 
