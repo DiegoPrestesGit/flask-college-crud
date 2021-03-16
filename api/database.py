@@ -1,5 +1,6 @@
 import psycopg2
 import uuid
+from datetime import date
 
 
 def create_connection():
@@ -32,22 +33,30 @@ def get_all_users():
 def get_user_by_id(user_id):
     connection = create_connection()
     cursor = connection.cursor()
-    cursor.execute('''SELECT * FROM users WHERE id = {0}'''.format(user_id))
-    user = cursor.fetchall()
+    user_id_formated = "'{0}'".format(user_id)
+    cursor.execute('SELECT id, name, email, password FROM users WHERE id = {0}'.format(
+        user_id_formated))
+    user_data = cursor.fetchone()
+    user_formated = (
+        'user: {0}'.format(user_data[0]),
+        'name: {0}'.format(user_data[1]),
+        'email: {0}'.format(user_data[2]),
+        'password: {0}'.format(user_data[3]))
 
     cursor.close()
     connection.close()
 
-    return user
+    return user_formated
 
 
 def create_user(name, email, password):
     connection = create_connection()
     cursor = connection.cursor()
     user_id = uuid.uuid1()
+    date_now = date.today()
     cursor.execute(
-        '''INSERT INTO users(id, name, password)
-        VALUES({0}, {1}, {2})'''.format(user_id, name, email, password))
+        '''INSERT INTO users(id, name, password, created_at, updated_at)
+        VALUES({0}, {1}, {2}, {3}, {4})'''.format(user_id, name, email, password, date_now, date_now))
 
     cursor.close()
     connection.close()
