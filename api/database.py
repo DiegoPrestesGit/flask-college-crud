@@ -54,9 +54,16 @@ def create_user(name, email, password):
     cursor = connection.cursor()
     user_id = uuid.uuid1()
     date_now = date.today()
+    name_formated = "'{0}'".format(name)
+    email_formated = "'{0}'".format(email)
+    password_formated = "'{0}'".format(password)
+    date_formated = "'{0}'".format(date_now)
+    user_id_formated = "'{0}'".format(user_id)
     cursor.execute(
-        '''INSERT INTO users(id, name, password, created_at, updated_at)
-        VALUES({0}, {1}, {2}, {3}, {4})'''.format(user_id, name, email, password, date_now, date_now))
+        '''INSERT INTO users(id, name, email, password, created_at, updated_at)
+        VALUES({0}, {1}, {2}, {3}, {4})'''.format(
+            user_id_formated, name_formated, email_formated, password_formated, date_formated, date_formated
+        ))
 
     cursor.close()
     connection.close()
