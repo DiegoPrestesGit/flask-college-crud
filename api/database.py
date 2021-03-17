@@ -33,11 +33,11 @@ def get_all_users():
 def get_user_by_id(user_id):
     connection = create_connection()
     cursor = connection.cursor()
-    user_id_formated = "'{0}'".format(user_id)
+    user_id = "'{0}'".format(user_id)
     cursor.execute('SELECT id, name, email, password FROM users WHERE id = {0}'.format(
-        user_id_formated))
+        user_id))
     user_data = cursor.fetchone()
-    user_formated = (
+    user = (
         'user: {0}'.format(user_data[0]),
         'name: {0}'.format(user_data[1]),
         'email: {0}'.format(user_data[2]),
@@ -46,24 +46,19 @@ def get_user_by_id(user_id):
     cursor.close()
     connection.close()
 
-    return user_formated
+    return user
 
 
 def create_user(name, email, password):
     connection = create_connection()
     cursor = connection.cursor()
     user_id = uuid.uuid1()
-    date_now = date.today()
-    name_formated = "'{0}'".format(name)
-    email_formated = "'{0}'".format(email)
-    password_formated = "'{0}'".format(password)
-    date_formated = "'{0}'".format(date_now)
-    user_id_formated = "'{0}'".format(user_id)
-    cursor.execute(
-        '''INSERT INTO users(id, name, email, password, created_at, updated_at)
-        VALUES({0}, {1}, {2}, {3}, {4})'''.format(
-            user_id_formated, name_formated, email_formated, password_formated, date_formated, date_formated
-        ))
+    user = (name, email, password)
 
+    cursor.execute("INSERT INTO users(id, name, email, password, created_at, updated_at) VALUES(%s, %s, %s, %s, %s, %s)",
+                   (str(user_id), name, email, password, '2017-03-18 00:00:00', '2017-03-18 00:00:00'))
+
+    connection.commit()
     cursor.close()
     connection.close()
+    return user
