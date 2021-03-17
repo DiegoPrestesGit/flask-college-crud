@@ -18,5 +18,5 @@ class User(Resource):
         user_email = body.get('email')
         user_password = body.get('password')
 
-        create_user(user_name, user_email, user_password)
-        return {"message": "post"}, 201
+        new_user = create_user(user_name, user_email, user_password)
+        return new_user, 201
