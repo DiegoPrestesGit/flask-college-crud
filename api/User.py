@@ -12,7 +12,7 @@ class User(Resource):
     def post(self):
         body = request.get_json()
         if not body:
-            return {"message": "nobody to see here"}, 400
+            return {"message": "nothing to see here"}, 400
 
         user_name = body.get('name')
         user_email = body.get('email')

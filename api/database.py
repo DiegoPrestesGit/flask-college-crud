@@ -16,12 +16,13 @@ def create_connection():
 def get_all_users():
     connection = create_connection()
     cursor = connection.cursor()
-    cursor.execute('select id, name from users')
+    cursor.execute('select *, name from users')
     rows = cursor.fetchall()
     users = []
 
     for row in rows:
-        user = (f'id: {row[0]}, name: {row[1]}')
+        user = (f'id: {row[0]}', f'name: {row[1]}', f'email: {row[2]}',
+                f'password: {row[3]}', f'created_at: {row[4]}', f'updated_at: {row[5]}')
         users.append(user)
 
     cursor.close()
