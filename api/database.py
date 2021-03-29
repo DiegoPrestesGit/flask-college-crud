@@ -5,11 +5,11 @@ from datetime import date
 
 def create_connection():
     return psycopg2.connect(
-        host='localhost',
+        host='college-crud-instance-1.csaohqjx3mfa.us-east-1.rds.amazonaws.com',
         database='postgres',
         user='postgres',
-        password='login-password',
-        port='5433'
+        password='12345678',
+        port='5432'
     )
 
 
